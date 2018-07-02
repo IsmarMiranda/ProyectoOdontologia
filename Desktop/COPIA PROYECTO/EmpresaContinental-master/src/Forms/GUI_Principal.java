@@ -1,0 +1,285 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Forms;
+
+import Clases.Constantes;
+import java.awt.Cursor;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+
+/**
+ *
+ * @author ismar
+ */
+public class GUI_Principal extends javax.swing.JFrame {
+ ////////////////////////////////////////////////////////////////////////////
+    // Variables de clase
+    ////////////////////////////////////////////////////////////////////////////
+    /**
+     * Obtenemos la referencia al entorno de ventanas.
+     * @since 1.6
+     */
+    private GraphicsEnvironment gEnv;
+
+    /**
+     * Obtenemos el dispositivo gráfico.
+     * @since 1.6
+     */
+    private GraphicsDevice gd;
+
+
+    /**
+     * Mesa de Dibujo donde se dibujan todos los objetos que crea el usuario.
+     * @since 1.6
+     */
+    private PanelDibujo mesaDeDibujo;
+   
+    /**
+     * Ventana Ayuda.
+     *
+     * @since 1.6
+     */
+    //private VentanaAyuda ventanaAyuda;
+
+    /**
+     * El color del borde de los objetos.
+     *
+     * @since 1.6
+     */
+    //boolean colorBordeObjetos ;
+
+    /**
+     * El color de fondo de la pantalla.
+     *
+     * @since 1.6
+     */
+    boolean colorDeFondoPantalla;
+
+    /**
+     * El color de relleno.
+     *
+     * @since 1.6
+     */
+    boolean colorRelleno;
+
+    /**
+     * Valor boleano para saber si es la ultima version del archivo generado.
+     *
+     * @since 1.6
+     */
+    boolean archivoGuardadoUltimaVersion;
+
+    /**
+     * valor boleano para saber si la imagen sin guardar se ha modificado.
+     *
+     * @since 1.6
+     */
+    boolean modificarImagenSinGuardar;
+
+
+    /**
+     * Cursor predeterminado.
+     * @since 1.6
+     */
+    private Cursor cursorPredeterminado;
+
+    /**
+     * Cursor actual.
+     * @since 1.6
+     */
+    private Cursor cursorActual;
+
+    /**
+     * FALTA COMENTAR
+     *
+     * @since 1.6
+     */
+    private Toolkit toolKit;
+
+    /**
+     * Imagen para el cursor pencil.
+     * @since 1.6
+     */
+     private Image pencilImg;
+
+    /**
+     * Imagen para el cursor eraser.
+     * @since 1.6
+     */
+     private Image eraserImg;
+
+    /**
+     * Imagen para el cursor brush.
+     * @since 1.6
+     */
+     private Image brushImg;
+
+     /*
+      * El icono de la aplicacion.
+      * @since 1.6
+      */
+     private Image iconoAplicacion;
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Constructores
+    ////////////////////////////////////////////////////////////////////////////
+    /**
+     * Construye la GUI Principal.
+     * @since 1.6
+     */
+    
+    
+    
+    /**
+     * Creates new form GUI_Principal
+     */
+    public GUI_Principal() {
+         // Se elije el tema por defecto de la aplicación
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch(Exception e){
+            // Look and Feel predeterminado de Java
+            UIManager.getCrossPlatformLookAndFeelClassName();
+        }
+        modificarImagenSinGuardar = false;
+        colorDeFondoPantalla = false;
+        colorRelleno = false;
+        archivoGuardadoUltimaVersion = false;
+
+        gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+        // Obtenemos el dispositivo gráfico primario (por defecto)
+        gd = gEnv.getDefaultScreenDevice();
+        initComponents();
+        
+        // Centrar la ventana en la pantalla
+        setLocationRelativeTo(null);
+       
+        // Cambiar el titulo de la aplicacion
+        setTitle(Constantes.TITULO_PROGRAMA);
+
+        // Crea el objeto de Mesa de Dibujo
+        mesaDeDibujo = new PanelDibujo();
+        // Establece un esquema para la mesa de dibujo y agrega a la ventana
+        // principal
+        getContentPane().add(mesaDeDibujo, java.awt.BorderLayout.CENTER);
+
+
+        toolKit = Toolkit.getDefaultToolkit();
+        
+        this.setIconImage(iconoAplicacion);
+        pencilImg = toolKit.getImage(getClass().getResource("/imagenes/cursores/pencil.gif"));
+        cursorPredeterminado =  toolKit.createCustomCursor(pencilImg, new Point(10,24),"Pencil Cursor");
+        cursorActual = cursorPredeterminado;
+        mesaDeDibujo.setCursorActual(cursorActual);
+        mesaDeDibujo.setModoDibujar(PanelDibujo.getLAPIZ()); 
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanelInformacionExtra = new javax.swing.JPanel();
+        jLabelCoordenadasPuntero = new javax.swing.JLabel();
+        jLabelHerramientaSeleccionadaObjeto = new javax.swing.JLabel();
+        jPanelBarraAccesoDirecto = new javax.swing.JPanel();
+        jButtonGuardar = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(895, 345));
+        setResizable(false);
+
+        jPanelInformacionExtra.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelInformacionExtra.add(jLabelCoordenadasPuntero);
+        jPanelInformacionExtra.add(jLabelHerramientaSeleccionadaObjeto);
+
+        getContentPane().add(jPanelInformacionExtra, java.awt.BorderLayout.SOUTH);
+
+        jPanelBarraAccesoDirecto.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
+
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.setToolTipText("Guardar");
+        jButtonGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
+        jPanelBarraAccesoDirecto.add(jButtonGuardar);
+
+        getContentPane().add(jPanelBarraAccesoDirecto, java.awt.BorderLayout.NORTH);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        try {
+            if(mesaDeDibujo.guardarImagen()){
+                archivoGuardadoUltimaVersion = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI_Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GUI_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GUI_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GUI_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GUI_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GUI_Principal().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonGuardar;
+    public static javax.swing.JLabel jLabelCoordenadasPuntero;
+    private javax.swing.JLabel jLabelHerramientaSeleccionadaObjeto;
+    private javax.swing.JPanel jPanelBarraAccesoDirecto;
+    private javax.swing.JPanel jPanelInformacionExtra;
+    // End of variables declaration//GEN-END:variables
+}

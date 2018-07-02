@@ -1,0 +1,13 @@
+delimiter //
+
+DROP TRIGGER IF EXISTS eliminartelefonos //
+
+CREATE TRIGGER eliminartelefonos
+BEFORE DELETE ON empleados
+FOR EACH ROW
+BEGIN
+  SET FOREIGN_KEY_CHECKS = 0;
+  DELETE from telefono WHERE empleados_id_empleados = old.id;
+END//
+
+delimiter ;

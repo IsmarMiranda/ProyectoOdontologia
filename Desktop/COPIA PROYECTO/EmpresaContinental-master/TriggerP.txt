@@ -1,0 +1,13 @@
+delimiter //
+
+DROP TRIGGER IF EXISTS DescontarExistencia //
+
+CREATE TRIGGER DescontarExistencia
+BEFORE INSERT ON detalle_ventas
+FOR EACH ROW
+BEGIN
+  DECLARE CantidadAnterior INT DEFAULT 0;
+  SELECT cantidad INTO CantidadAnterior FROM producto WHERE id_producto = NEW.idproducto;
+  UPDATE producto SET cantidad = (CantidadAnterior - NEW.cantidad) WHERE id_producto = NEW.idproducto;
+END; // 
+delimiter ;
